@@ -87,6 +87,10 @@ This register is the **single source of truth for assumed values**. Every assump
 | A-24 | Substitution preference at checkout | "Contact me" (default) · "Substitute a similar wine" (agent/staff may choose a same-style wine within ±10% of price) · "Do not substitute". |
 | A-25 | Pre-arrival (futures) orders | Paid in full at order. Cancellable within **14 days** of order; after that, non-cancellable unless arrival is more than **90 days** later than the published estimate, in which case full refund is available. |
 | A-26 | Purchase limits | Default max **36 bottles per SKU per order** unless the product shows a lower allocation limit. Orders over **$2,500** or **60 bottles** route to the events/bulk team (manual review). |
+| A-27 | Delivery tipping | Optional tip for local-delivery drivers, shown separately; not offered for shipping or pickup. |
+| A-28 | Pre-arrival / special-order arrival | Customer notified on arrival; delivery scheduled or held for pickup up to **30 days** after arrival, then delivered via the default method (fees per A-10/A-15). Special orders require full prepayment and are final sale except defective/damaged. |
+| A-29 | Payment methods | Major credit/debit cards (Visa, Mastercard, Amex, Discover), Apple Pay, Google Pay, Store gift cards and store credit; split payment with gift card/credit + one card. No cash-on-delivery, no buy-now-pay-later, no checks online. Card **authorized at order, captured at fulfillment**. Pickup orders are prepaid online. Corporate invoicing only via the events team. |
+| A-29b | Alternate pickup person | Purchaser may name one alternate pickup person (21+, ID required) at checkout or up to the pickup; names must match ID. |
 
 ### 3.4 Returns, refunds, damages
 
@@ -98,7 +102,7 @@ This register is the **single source of truth for assumed values**. Every assump
 | A-33 | Older-vintage exception | Wines **more than 10 years past vintage**, or listed as "library", "collectible" or "sold as-is", are sold at the buyer's risk for cork and natural ageing variation. Claims accepted only for clear storage/handling damage before sale. (Modeled on NYC retailer practice.) |
 | A-34 | Change-of-mind returns: NJ Store | Unopened, resaleable, within **14 days**, with order number. Refund to the original payment method minus a **15% restocking fee**, or **full value as store credit**. Excludes special orders, pre-arrivals, allocated items, "final sale", large formats ≥ 3 L, and orders that were temperature-held by the customer. |
 | A-35 | Change-of-mind returns: NY Store | **Not accepted.** All sales final except defective, damaged, or our error. (Matches common NY retailer practice such as "all sales are final on wines". Legal to confirm whether this is legally required or a policy choice.) |
-| A-36 | Refund timing | Initiated within 1 business day of approval. Card refunds post in **5–10 business days** depending on bank. Store credit is instant. |
+| A-36 | Refund timing | Initiated within 1 business day of approval. Card refunds post in **5–10 business days** depending on bank. Store credit is instant, **never expires**, has no cash value, and works online and in both stores. |
 
 ### 3.5 Pricing
 
@@ -107,14 +111,15 @@ This register is the **single source of truth for assumed values**. Every assump
 | A-40 | Price lock | Price is locked when the order is placed, except for obvious pricing errors (A-41). |
 | A-41 | Pricing error | If a price was displayed in clear error (e.g., more than 50% below the item's regular price with no active promotion), we may cancel unfulfilled items with notice and full refund. Fulfilled orders are honored. |
 | A-42 | Post-purchase price drops | No retroactive adjustment after fulfillment. Before fulfillment, the customer may cancel and re-order at the new price if stock allows. |
-| A-43 | Price matching | Available on an **identical** item (same producer, wine, vintage, size) from a **licensed retailer in the same state**, in stock and publicly verifiable. Excludes marketplaces, auctions, membership-warehouse pricing, club/subscription, bundled and clearance prices. Requires human pricing approval; a match can never set a price below legal minimums (NJ below-cost rule). |
+| A-43 | Price matching | Available on an **identical** item (same producer, wine, vintage, size) from a **licensed retailer in the same state**, in stock and publicly verifiable. Excludes marketplaces, auctions, membership-warehouse pricing, club/subscription, bundled and clearance prices. Request before purchase, or within **7 days after purchase** (difference refunded to original payment if approved). Max one match per SKU per customer per 30 days; quantity up to 12 bottles. Requires human pricing approval; a match can never set a price below legal minimums (NJ below-cost rule). |
 | A-44 | Price bands | Everyday under $15 · Step-up $15–$29.99 · Premium $30–$59.99 · Luxury $60–$149.99 · Collectible $150+ (per 750 ml). |
+| A-45 | Online vs in-store price | Online prices equal the fulfilling store's shelf price, except promotions explicitly marked "online only" or "in-store only". |
 
 ### 3.6 Discounts, promotions, loyalty
 
 | ID | Assumption | Value |
 |---|---|---|
-| A-50 | Mixed-case discount | **10% off** 6–11 eligible 750 ml wines; **15% off** 12+. Mix and match. A 1.5 L bottle counts as 2; 375 ml counts as 0.5. Excludes sale-priced items, pre-arrival, allocated, gift cards, boxed/canned wine. |
+| A-50 | Mixed-case discount | **10% off** 6–11 eligible 750 ml wines; **15% off** 12+. Mix and match. Bottles count in 750 ml equivalents (187 ml = 0.25, 375 ml = 0.5, 1.5 L = 2, 3 L = 4). Sale-priced items **count toward** the bottle total but don't get the extra %. Not eligible and not counted: pre-arrival, allocated, special-order, collectible, price-matched items, gift cards, boxed/canned wine. If an out-of-stock removal drops the count below a tier, the original tier is kept. |
 | A-51 | Promo code stacking | One promo code per order. Codes do **not** combine with the mixed-case discount unless the code says "stackable". Codes never apply to taxes, gift cards, or (unless a free-delivery code) fees. |
 | A-52 | First-order offer | **$10 off** first order of $75+ product subtotal, one per person/household/payment method. |
 | A-53 | Loyalty program ("Rewards") | Free to join; open to all 21+ account holders. **1 point per $1** of eligible spend (after discounts, before tax/fees). **250 points = $10 reward.** Rewards expire **90 days** after issue; points expire after **12 months of account inactivity**. Insider tier at **$750** rolling 12-month spend: 1.25 pts/$ plus early access. |
@@ -126,7 +131,7 @@ This register is the **single source of truth for assumed values**. Every assump
 
 | ID | Assumption | Value |
 |---|---|---|
-| A-60 | Agent may refund autonomously | Damaged/broken/missing/wrong item claims up to **$150 per order** with required evidence. |
+| A-60 | Agent may refund autonomously | Damaged/broken/missing/wrong-item claims and defective-wine (corked/flawed) claims up to **$150 per order** with required evidence; defective claims limited to **2 bottles per customer per 60 days** without human review. Also pricing corrections and courtesy code refunds within the same $150 limit. |
 | A-61 | Agent may issue goodwill store credit | Up to **$15**, max once per customer per **90 days**, for service failures (late delivery, missed window). |
 | A-62 | Requires human approval | Refunds over $150; any refund without required evidence; second claim within 60 days; price matches; returns outside window; account ownership disputes; all legal, privacy-deletion, safety, fraud or law-enforcement matters. |
 | A-63 | Human support SLAs | **P1** (safety, fraud, account takeover, delivery to a minor or intoxicated person, injury): immediate live handoff during support hours, on-call page outside hours. **P2** (claims over $150, pricing disputes, privacy requests): first response within 4 business hours. **P3** (general): within 1 business day. |
@@ -140,6 +145,8 @@ This register is the **single source of truth for assumed values**. Every assump
 | A-72 | Privacy rights | Access, correction, deletion, portability, and opt-out of targeted advertising / sale / profiling are offered to **all customers regardless of state** (modeled on the New Jersey Data Privacy Act, effective Jan 15, 2025). Target completion: 15 days; legal maximum 45 days (+45 extension). |
 | A-73 | Record retention after deletion | Order, tax and age-verification records are retained as required by law, then deleted. Marketing and taste-profile data are deleted on request. |
 | A-74 | Payment data | The agent never collects, reads back or stores full card numbers, CVV or ID images in chat. Payment and ID entry happen only in the secure UI. |
+| A-75 | Accounts | An account is required to order (no guest checkout), because age verification and compliance records attach to the account. One account per person; up to 10 saved addresses. Order history is visible online for 24 months; older records on request. |
+| A-76 | Marketing messages | Email marketing is opt-in with one-click unsubscribe (processed within 10 business days, CAN-SPAM). Marketing SMS requires express written consent (TCPA); up to 4 marketing texts per month; reply STOP to opt out; sent only 9 am–8 pm ET. Transactional messages (order, delivery, security) can't be turned off while an order is active. |
 
 ### 3.9 Store information (defaults; live hours via `get_store_info`)
 

@@ -14,6 +14,7 @@ last_reviewed: 2026-11-19
 review_cycle_days: 90
 owner: operations-and-compliance
 status: active
+depends_on_assumptions: [A-01, A-02, A-05, A-06, A-07, A-10, A-11, A-13, A-15, A-18, A-20, A-22, A-23, A-32, A-33, A-34, A-35, A-50, A-53, A-54, A-55, A-72, A-81]
 related: [KB-SYS-001]
 ---
 

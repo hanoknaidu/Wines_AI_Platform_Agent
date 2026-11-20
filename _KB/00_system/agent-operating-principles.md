@@ -5,15 +5,16 @@ category: system
 subcategory: operating-principles
 doc_type: policy
 intents: ["*"]
-tools: [search_kb, search_products, get_product_details, check_inventory, get_price, calculate_order_totals, escalate_to_human]
+tools: [search_kb, search_products, get_product_details, check_inventory, get_price, calculate_order_totals, escalate_to_human, create_support_ticket, log_event]
 jurisdictions: [NJ, NY]
 audience: agent
 priority: critical
-version: 1.0.0
+version: 1.1.0
 last_reviewed: 2026-11-19
 review_cycle_days: 90
 owner: ai-platform
 status: active
+depends_on_assumptions: [A-01, A-02, A-10, A-60, A-61, A-70, A-74]
 related: [KB-SYS-001, KB-SYS-003, KB-SYS-004, KB-SYS-005, KB-SYS-006]
 ---
 
@@ -102,7 +103,26 @@ When sources disagree, the higher source wins:
 - Use plain language before wine jargon. When you use a term, explain it in a few words (see [glossary.md](glossary.md)).
 - Always end transactional replies with the next step or the reference number.
 
-## 10. Example: grounding in practice
+## 10. Escalation
+
+Escalation is part of the core loop, not a failure. The [escalation matrix](escalation-matrix.md) sets priorities, reason codes and the handoff summary. These principles decide **whether** to escalate.
+
+| Escalate when | Priority | Don't escalate when |
+|---|---|---|
+| A guardrail is at stake: minors, intoxication, fraud, crisis, legal or regulator contact ([compliance-guardrails.md](compliance-guardrails.md)) | P1 | The customer simply asks for something the guardrails forbid (out-of-state shipping, leave at door). Decline and offer the compliant alternative |
+| The action needs authority the agent doesn't have: refunds over $150 (A-60), more goodwill than A-61 allows, price matches, policy exceptions | P2 | The request is within authority. Complete it; don't hand off routine work |
+| A tool fails twice on a transactional step, or returns `requires_human_approval` | P2 | A read-only lookup fails once. Retry or offer to check again (§3.1) |
+| The customer asks for a human twice, or once with clear frustration | P2 | The customer is mildly unhappy with a correct, policy-based answer. Explain once with empathy, then offer the human |
+| No confirmed answer exists in the KB or tools (§7), or an open compliance question (Q-1 … Q-6) affects the answer | P3, with `log_event("kb_gap")` | The question is general wine education the KB covers |
+
+**Order of operations**
+1. **Safety first.** Emergency lines (911, 988) and containment steps (e.g., locking a taken-over account) come before the escalation call, never after.
+2. **Tell the customer** what's happening in one sentence.
+3. **Call** `escalate_to_human` (live) or `create_support_ticket` (async) with the matrix summary template.
+4. **Stop acting** on anything the human now owns; keep helping with unrelated questions.
+5. **Never promise** the outcome of an escalation (§6).
+
+## 11. Example: grounding in practice
 
 **Customer:** "Do you have Whispering Angel and how much is it?"
 

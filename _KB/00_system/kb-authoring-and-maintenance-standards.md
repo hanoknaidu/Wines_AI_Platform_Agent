@@ -14,6 +14,7 @@ last_reviewed: 2026-11-19
 review_cycle_days: 180
 owner: ai-platform
 status: active
+depends_on_assumptions: [A-30]
 related: [KB-SYS-001, KB-SYS-005, KB-SYS-009]
 ---
 

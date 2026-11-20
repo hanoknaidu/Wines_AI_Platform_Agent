@@ -14,6 +14,7 @@ last_reviewed: 2026-11-19
 review_cycle_days: 180
 owner: wine-team
 status: active
+depends_on_assumptions: [A-44]
 related: [KB-TST-001, KB-TST-002]
 ---
 

@@ -4,17 +4,17 @@ title: Compliance Guardrails (Alcohol Sales, Age, Responsible Service)
 category: system
 subcategory: compliance
 doc_type: policy
-intents: ["*", age_question, underage_attempt, intoxication_signal, out_of_state_shipping, health_question, legal_question]
+intents: ["*", compliance.underage, compliance.intoxication, compliance.out_of_state, compliance.health_claim_request, compliance.resale, compliance.crisis, account.age_verification]
 tools: [get_age_verification_status, start_age_verification, get_fulfillment_options, escalate_to_human]
 jurisdictions: [NJ, NY]
 audience: agent, compliance
 priority: critical
-version: 1.0.0
+version: 1.1.0
 last_reviewed: 2026-11-19
 review_cycle_days: 60
 owner: compliance
 status: active
-depends_on_assumptions: [A-01, A-02, A-04, A-05, A-06, A-07, A-20, A-54, A-55]
+depends_on_assumptions: [A-01, A-02, A-04, A-05, A-06, A-07, A-20, A-54, A-55, A-61, A-70, A-74]
 related: [KB-SYS-001, KB-SYS-002, KB-ORD-006, KB-NAW-002, KB-FAQ-002]
 ---
 
@@ -120,3 +120,34 @@ Both states prohibit selling or delivering alcohol to a visibly intoxicated pers
 | Self-harm or medical emergency | `safety_crisis` |
 | Law enforcement / legal threat | `legal_matter` |
 | ID verification failures after retry | `id_verification_failure` (P2) |
+
+## Response examples
+
+G1 and G4 have their examples inline above. The rest follow. Each one declines or redirects in one or two sentences and offers a compliant next step, without lecturing.
+
+**G2: verification failed after a retry**
+> "I'm not able to override the ID check, but I've passed this to our verification team. Your order stays on hold, and they'll contact you within 4 business hours."
+
+**G3: intoxication or impaired driving**
+> "I want to make sure you're safe tonight, so please don't drive to pick anything up. If you'd like, I can help you plan an order for tomorrow instead."
+
+**G5: leave at the door**
+> "I'm sorry, we can't leave wine unattended. Someone 21 or older needs to show ID when it's handed over. Would a different window, a work address or store pickup work better?"
+
+**G6: private discount request**
+> "I can't create a special discount. Every offer we have is open to all customers on the same terms. Here's what applies to your cart right now: …"
+
+**G7: health claim**
+> "I can't say whether a wine is good for your health. That's a question for your doctor. I can share what the label says about sulfites, and suggest a few lighter, lower-alcohol options if that helps."
+
+**G8: distress**
+> "I'm really sorry you're going through this. You can call or text 988 anytime to talk with someone. If you're in immediate danger, please call 911."
+
+**G9: resale request**
+> "We sell at retail for personal use, gifts and private events, so I can't set up an order for resale. I've passed your details to our business team, who can explain what's possible."
+
+**G10: someone else's account**
+> "For privacy reasons I can't look up or share another person's account or orders. If it's your account, I can verify you with a one-time code."
+
+**G11: superlative price claim**
+> "I can't promise we're the lowest price anywhere, but I can show you the current price, any active offers, and our price-match policy for this wine."

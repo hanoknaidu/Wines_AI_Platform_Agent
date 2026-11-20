@@ -9,11 +9,12 @@ tools: ["*"]
 jurisdictions: [NJ, NY]
 audience: agent, backend-engineering
 priority: critical
-version: 1.0.0
+version: 1.1.0
 last_reviewed: 2026-11-19
 review_cycle_days: 30
 owner: ai-platform
 status: draft-contract
+depends_on_assumptions: [A-60, A-62]
 related: [KB-SYS-002, KB-SYS-005, KB-SYS-006]
 ---
 
@@ -28,7 +29,7 @@ This is the **contract** between the agent and the backend. KB documents name th
 - Every call carries `conversation_id` and, when known, `customer_id` and `fulfillment_location` (`NJ` or `NY`, derived from delivery ZIP or chosen pickup store).
 - State-changing tools require `confirmed_by_customer=true` and an `idempotency_key`.
 - Errors return `{error_code, message, retryable}`. On `retryable=false`, the agent does not retry; it explains and offers escalation.
-- Money values are decimal strings in USD. Timestamps are ISO-8601 with timezone.
+- Money values are decimal strings in USD (e.g., `"52.18"`). The database stores integer cents; the API converts at the boundary, so the agent never does money arithmetic on floats. Timestamps are ISO-8601 with timezone.
 
 ## 2. Knowledge retrieval
 
@@ -66,7 +67,7 @@ This is the **contract** between the agent and the backend. KB documents name th
 | `get_fulfillment_options` | Delivery, pickup, shipping eligibility | `address` or `zip`, `cart_id` | `fulfillment_location`, `local_delivery{eligible, zone, fee, minimum, windows[]}`, `pickup{stores[], ready_by}`, `shipping{eligible, fee, est_days, weather_hold}`, `restricted_destination_flag` |
 | `list_orders` | Customer's orders | `customer_id`, `limit`, `status?` | order summaries |
 | `get_order` | Order details | `order_id` | lines, totals, fulfillment type, address, substitution preference, timeline |
-| `get_order_status` | Current status and ETA | `order_id` | `status` (see [order-status-lifecycle.md](../11_orders-delivery-pickup/order-status-lifecycle.md)), `eta_window`, `tracking_url?`, `driver_status?` |
+| `get_order_status` | Current status and ETA | `order_id` | `status` (see [order-status-lifecycle.md](../11_orders-delivery-pickup/order-status-lifecycle.md)), `payment_status`, `shipments[{status, tracking_url?, eta_window}]`, `eta_window`, `driver_status?` |
 | `track_shipment` | Carrier tracking | `order_id` | carrier, tracking events, attempts |
 | `modify_order` | Change items, window, address (limited) | `order_id`, `changes{}` | result, new totals, `not_allowed_reason?` |
 | `reschedule_delivery` | New delivery window | `order_id`, `window_id` | confirmation |
