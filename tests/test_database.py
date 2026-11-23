@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Integrity tests for database/schema.sql + database/seed_data.sql.
+"""Integrity tests for _DB/schema.sql + _DB/seed_data.sql.
 
 Each test runs inside a SAVEPOINT that is rolled back, so tests are independent.
 They prove the database itself (not only a future API) rejects bad data.
@@ -25,8 +25,8 @@ class DatabaseTestCase(unittest.TestCase):
     def setUpClass(cls):
         cls.conn = sqlite3.connect(":memory:", isolation_level=None)
         cls.conn.execute("PRAGMA foreign_keys = ON")
-        cls.conn.executescript((ROOT / "database" / "schema.sql").read_text())
-        cls.conn.executescript((ROOT / "database" / "seed_data.sql").read_text())
+        cls.conn.executescript((ROOT / "_DB" / "schema.sql").read_text())
+        cls.conn.executescript((ROOT / "_DB" / "seed_data.sql").read_text())
 
     @classmethod
     def tearDownClass(cls):

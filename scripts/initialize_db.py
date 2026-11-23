@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Create, seed and verify the Wines AI Platform Agent e-commerce database.
 
-Builds database/ecommerce.db from database/schema.sql and database/seed_data.sql,
+Builds _DB/ecommerce.db from _DB/schema.sql and _DB/seed_data.sql,
 then verifies it:
   * PRAGMA integrity_check and foreign_key_check
   * every foreign key has a supporting index
@@ -33,7 +33,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DB_DIR = ROOT / "database"
+DB_DIR = ROOT / "_DB"
 SCHEMA = DB_DIR / "schema.sql"
 SEED = DB_DIR / "seed_data.sql"
 SAMPLES = DB_DIR / "sample_queries.sql"
@@ -246,7 +246,7 @@ def main() -> int:
     ap.add_argument("--force", action="store_true", help="overwrite an existing database file")
     ap.add_argument("--schema-only", action="store_true", help="create the schema without seed data")
     ap.add_argument("--verify-only", action="store_true", help="only verify an existing database")
-    ap.add_argument("--demo", action="store_true", help="run database/sample_queries.sql after building")
+    ap.add_argument("--demo", action="store_true", help="run _DB/sample_queries.sql after building")
     ap.add_argument("--demo-only", action="store_true", help="only run the sample queries on an existing database")
     ap.add_argument("--quiet", action="store_true", help="print only failures and the summary")
     args = ap.parse_args()

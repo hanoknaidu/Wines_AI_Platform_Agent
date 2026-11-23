@@ -1,0 +1,46 @@
+# Local stack: PostgreSQL + Redis + one-shot migration/seed job + API.
+#   docker compose up --build
+#   open http://localhost:8000/docs
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: wines
+      POSTGRES_PASSWORD: wines          # local only; use a secret store in real environments
+      POSTGRES_DB: wines_agent
+    ports: ["${DB_PORT:-5433}:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wines -d wines_agent"]
+      interval: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      retries: 20
+
+  migrate:
+    build: .
+    env_file: [.env.docker]
+    command: >
+      sh -c "alembic upgrade head &&
+             python scripts/load_seed.py --if-empty"
+    depends_on:
+      db: {condition: service_healthy}
+    restart: "no"
+
+  api:
+    build: .
+    env_file: [.env.docker]
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    ports: ["${API_PORT:-8000}:8000"]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+
+volumes:
+  pgdata:

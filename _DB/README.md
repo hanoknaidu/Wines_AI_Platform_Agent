@@ -2,16 +2,16 @@
 
 The relational source of truth behind the Wines AI Platform Agent: customers, catalog, pricing, inventory, orders, payments, fulfillment, returns, refunds, support, and audit. It covers a two-state (NJ + NY) licensed wine and spirits retailer and is designed to scale to enterprise volume.
 
-**Status:** schema and seed data only. There are no APIs yet. In phase 2B the AI agent will reach this data **only through authenticated API tools** (the contract is in [`_KB/00_system/tool-reference.md`](../_KB/00_system/tool-reference.md)) and never by SQL.
+**Status:** this SQLite build is the reference schema and the source of the fictional seed. Phase 2B (the FastAPI Tool APIs and the LangGraph agent, see the [root README](../README.md)) runs on PostgreSQL: `alembic upgrade head` creates the schema and `scripts/load_seed.py` copies this seed into it. The AI agent reaches the data **only through authenticated API tools** (contract: [`_KB/00_system/tool-reference.md`](../_KB/00_system/tool-reference.md)), never by SQL.
 
 ## Quick start
 
 ```bash
-python3 scripts/initialize_db.py --force          # build database/ecommerce.db and verify it
+python3 scripts/initialize_db.py --force          # build _DB/ecommerce.db and verify it
 python3 scripts/initialize_db.py --force --demo   # ...and print the 20 sample support queries
 python3 scripts/initialize_db.py --verify-only    # re-check an existing database
 python3 -m unittest discover -s tests -v          # 36 constraint tests (all should pass)
-sqlite3 database/ecommerce.db                     # explore (run PRAGMA foreign_keys=ON; first)
+sqlite3 _DB/ecommerce.db                     # explore (run PRAGMA foreign_keys=ON; first)
 ```
 
 Requirements: Python 3.9+ and SQLite 3.38+ (standard library only). The build writes to a temp file and replaces `ecommerce.db` only if every check passes.
