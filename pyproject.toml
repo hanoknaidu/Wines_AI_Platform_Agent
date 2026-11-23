@@ -1,0 +1,54 @@
+[project]
+name = "wines-ai-platform-agent"
+version = "0.2.0"
+description = "Agentic customer-support backend for a NJ + NY licensed wine retailer: FastAPI tool APIs + LangGraph agent"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "sqlalchemy[asyncio]>=2.0,<2.2",
+    "asyncpg>=0.29",
+    "aiosqlite>=0.20",
+    "alembic>=1.13",
+    "httpx>=0.27",
+    "anthropic>=2.0",
+    "langgraph>=1.0",
+    "structlog>=24.1",
+    "pyjwt>=2.8",
+    "pyyaml>=6.0",
+    "redis>=5.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.24", "ruff>=0.5"]
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "ASYNC"]
+ignore = ["B008"]   # FastAPI Depends() in defaults is idiomatic
+
+[tool.ruff.lint.per-file-ignores]
+# customer-facing prose and response templates read better unwrapped
+"app/agent/prompts.py" = ["E501"]
+"app/agent/llm/rule_based.py" = ["E501"]
+"tests/test_database.py" = ["E501", "E731"]  # phase-2A SQL constraint tests (pre-existing)
+"migrations/versions/*" = ["E501", "I001"]  # Alembic-generated

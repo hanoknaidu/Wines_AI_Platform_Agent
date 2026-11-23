@@ -1,5 +1,13 @@
 __pycache__/
 *.pyc
 .DS_Store
-# interrupted builds of database/ecommerce.db
-database/.ecommerce-build-*
+.venv/
+.env
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+# interrupted builds of _DB/ecommerce.db
+_DB/.ecommerce-build-*
+# local SQLite databases (the reference build _DB/ecommerce.db IS tracked)
+/*.db
