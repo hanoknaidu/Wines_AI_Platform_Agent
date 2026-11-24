@@ -90,6 +90,10 @@ curl -s -X POST $B/agent/chat -H "Authorization: Bearer $TOKEN" -H 'Content-Type
 ```
 Seed customers run `C-100001`…`C-100012`, and each one maps to a scenario in [_DB/README.md](_DB/README.md) (split shipment, chargeback, NY order, fraud hold and so on). Staff tokens: `{"role":"staff","subject":"S-1001"}`.
 
+### Chat frontend (SipGuide AI)
+
+`frontend/` holds the customer chat UI (React + Vite + TypeScript). In Phase 1 it runs on a mock agent and doesn't call this API yet: `cd frontend && npm install && npm run dev`. See [frontend/README.md](frontend/README.md).
+
 ## Tests
 
 ```bash
